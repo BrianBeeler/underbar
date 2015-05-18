@@ -115,9 +115,15 @@
 
   // Return the results of applying an iterator to each element.
   _.map = function(collection, iterator) {
+    var result=[]
+    for (var i in collection) {
+      result.push(iterator(collection[i]))
+      iterator(collection[i])
+    }
     // map() is a useful primitive iteration function that works a lot
     // like each(), but in addition to running the operation on all
     // the members, it also maintains an array of results.
+    return result
   };
 
   /*
@@ -159,6 +165,12 @@
   //   }); // should be 5, regardless of the iterator function passed in
   //          No accumulator is given so the first element is used.
   _.reduce = function(collection, iterator, accumulator) {
+    var total = (accumulator === undefined ? collection[0] : accumulator)
+    var i = (accumulator===undefined? 1:0)
+    for (var i; i<collection.length; i++) {
+      total= iterator(total,collection[i])
+    }
+    return total
   };
 
   // Determine if the array or object contains a given value (using `===`).
