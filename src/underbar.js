@@ -213,6 +213,7 @@
   _.some = function(collection, iterator) {
     // TIP: There's a very clever way to re-use every() here.
   if (iterator===undefined) {iterator =_.identity}
+
   function antiIterator(item) { return !iterator(item) }
   return !_.every(collection,antiIterator) 
  
@@ -238,6 +239,15 @@
   //     bla: "even more stuff"
   //   }); // obj1 now contains key1, key2, key3 and bla
   _.extend = function(obj) {
+    
+    for (var i in arguments) {
+      if (i>0) {
+        for (var key in arguments[i]) {
+          obj[key]=arguments[i][key];
+        }
+      }
+    }
+    return obj
   };
 
   // Like extend, but doesn't ever overwrite a key that already
