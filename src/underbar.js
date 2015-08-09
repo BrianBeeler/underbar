@@ -6,8 +6,7 @@
   // Returns whatever value is passed as the argument. This function doesn't
   // seem very useful, but remember it--if a function needs to provide an
   // iterator when the user does not pass one in, this will be handy.
-  _.identity = function(val) { return val
-  };
+  _.identity = function(val) { return val};
 
   /**
    * COLLECTIONS
@@ -202,7 +201,7 @@
     if (iterator===undefined) {iterator = _.identity}
     
     return _.reduce(collection, function(soFarTrue, item) {
-      if (soFarTrue) { return iterator(item)==true }
+      if (soFarTrue) { return !!iterator(item) }
       else { return false }
     }, true);
     
