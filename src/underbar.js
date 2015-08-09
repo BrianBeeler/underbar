@@ -347,11 +347,11 @@
   // http://mdn.io/Array.prototype.slice
   _.shuffle = function(array) {
     var arrCopy= array.slice(0,array.length)
-    var result=[], i
+    var result=[], i;
     while (arrCopy.length>0) {
       i = Math.floor(Math.random()*arrCopy.length)
       result.push(arrCopy[i])
-      arrCopy.splice(i,i+1)
+      arrCopy.splice(i,1)
     }
     return result
   };
@@ -368,6 +368,17 @@
   // Calls the method named by functionOrKey on each value in the list.
   // Note: You will need to learn a bit about .apply to complete this.
   _.invoke = function(collection, functionOrKey, args) {
+    var results = []
+ 
+    _.each(collection, function(val, index, col) {
+      if(typeof functionOrKey === "string") {
+        results.push(val[functionOrKey]());
+      } 
+      else {
+      results.push(functionOrKey.apply(val, args));
+      }
+    })
+    return results
   };
 
   // Sort the object's values by a criterion produced by an iterator.
