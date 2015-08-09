@@ -449,11 +449,65 @@
   // Takes an arbitrary number of arrays and produces an array that contains
   // every item shared between all the passed-in arrays.
   _.intersection = function() {
+    var all = []
+    for (var i = 0; i < arguments.length; i++) {
+      for (var j = 0; j < arguments[i].length; j++) {
+        all.push(arguments[i][j])
+      }
+    }
+
+    var tally = {}
+    for (var k = 0; k < all.length; k++) {
+      if (tally.hasOwnProperty(all[k])) {
+        tally[all[k]] ++ ;
+      }
+      else {
+        tally[all[k]] = 1;
+      }
+    }
+
+    var results = [];
+
+    for (var key in tally) {
+      if (tally[key] === arguments.length) {
+        results.push(key)
+      }
+    }
+
+    return results
+
   };
 
   // Take the difference between one array and a number of other arrays.
   // Only the elements present in just the first array will remain.
   _.difference = function(array) {
+        var all = []
+    for (var i = 0; i < arguments.length; i++) {
+      for (var j = 0; j < arguments[i].length; j++) {
+        all.push(arguments[i][j])
+      }
+    }
+
+    var tally = {}
+    for (var k = 0; k < all.length; k++) {
+      if (tally.hasOwnProperty(all[k])) {
+        tally[all[k]] ++ ;
+      }
+      else {
+        tally[all[k]] = 1;
+      }
+    }
+
+    var results = []
+
+    for (var l = 0; l < array.length; l++) {
+      if (tally[array[l]] === 1) {
+        results.push(array[l]) 
+      }
+    }
+
+    return results
+
   };
 
   // Returns a function, that, when invoked, will only be triggered at most once
