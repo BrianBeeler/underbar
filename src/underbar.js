@@ -87,7 +87,7 @@
   _.reject = function(collection, test) {
     // TIP: see if you can re-use _.filter() here, without simply
     // copying code in and modifying it
-    var notTest=function(item) { return !test((item))} 
+    var notTest=function(item) { return !test((item))}
     return _.filter(collection, notTest)
   };
 
@@ -146,19 +146,19 @@
   // Reduces an array or object to a single value by repetitively calling
   // iterator(accumulator, item) for each item. accumulator should be
   // the return value of the previous iterator call.
-  //  
+  //
   // You can pass in a starting value for the accumulator as the third argument
   // to reduce. If no starting value is passed, the first element is used as
   // the accumulator, and is never passed to the iterator. In other words, in
   // the case where a starting value is not passed, the iterator is not invoked
   // until the second element, with the first element as it's second argument.
-  //  
+  //
   // Example:
   //   var numbers = [1,2,3];
   //   var sum = _.reduce(numbers, function(total, number){
   //     return total + number;
   //   }, 0); // should be 6
-  //  
+  //
   //   var identity = _.reduce([5], function(total, number){
   //     return total + number * number;
   //   }); // should be 5, regardless of the iterator function passed in
@@ -178,7 +178,7 @@
     // Runs iterator on each item
     _.each(collection,function(item) {
         total= iterator(total,item);
-                                     }); 
+                                     });
     return total
   };
 
@@ -199,12 +199,12 @@
   _.every = function(collection, iterator) {
     // TIP: Try re-using reduce() here.
     if (iterator===undefined) {iterator = _.identity}
-    
+
     return _.reduce(collection, function(soFarTrue, item) {
       if (soFarTrue) { return !!iterator(item) }
       else { return false }
     }, true);
-    
+
   };
 
   // Determine whether any of the elements pass a truth test. If no iterator is
@@ -214,8 +214,8 @@
   if (iterator===undefined) {iterator =_.identity}
 
   function antiIterator(item) { return !iterator(item) }
-  return !_.every(collection,antiIterator) 
- 
+  return !_.every(collection,antiIterator)
+
   };
 
 
@@ -238,7 +238,7 @@
   //     bla: "even more stuff"
   //   }); // obj1 now contains key1, key2, key3 and bla
   _.extend = function(obj) {
-    
+
     for (var i in arguments) {
       if (i>0) {
         for (var key in arguments[i]) {
@@ -263,7 +263,7 @@
     }
     return obj
   };
-  
+
 
 
   /**
@@ -330,7 +330,7 @@
   // parameter. For example _.delay(someFunction, 500, 'a', 'b') will
   // call someFunction('a', 'b') after 500ms
   _.delay = function(func, wait) {
-   
+
     window.setTimeout(func,wait,arguments[2],arguments[3])
   };
 
@@ -369,11 +369,11 @@
   // Note: You will need to learn a bit about .apply to complete this.
   _.invoke = function(collection, functionOrKey, args) {
     var results = []
- 
+
     _.each(collection, function(val, index, col) {
       if(typeof functionOrKey === "string") {
         results.push(val[functionOrKey]());
-      } 
+      }
       else {
       results.push(functionOrKey.apply(val, args));
       }
@@ -502,7 +502,7 @@
 
     for (var l = 0; l < array.length; l++) {
       if (tally[array[l]] === 1) {
-        results.push(array[l]) 
+        results.push(array[l])
       }
     }
 
@@ -516,5 +516,17 @@
   //
   // Note: This is difficult! It may take a while to implement.
   _.throttle = function(func, wait) {
+     var canRun = true
+
+     return function () {
+       if (canRun) {
+         func.apply(null, arguments)
+         canRun = false;
+         window.setTimeout(function() {
+           canRun = true
+         },wait)
+       }
+     }
   };
+
 }());
