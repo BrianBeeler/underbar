@@ -402,9 +402,23 @@
   // _.zip(['a','b','c','d'], [1,2,3]) returns [['a',1], ['b',2], ['c',3], ['d',undefined]]
   _.zip = function(arr1, arr2) {
     var results = []
-    for (var i = 0; i < arr1.length; i++) {
-      results.push([arr1[i], arr2[i]])
+    var length = 0;
+
+    for (var i = 0 ; i < arguments.length; i++) {
+      if (arguments[i].length > length) {
+        length = arguments[i].length;
+      }
     }
+
+    for (var k = 0; k < length; k++ ) {
+      var zip = []
+      for (var j = 0; j < arguments.length; j++) {
+        zip.push(arguments[j][k])
+      }
+      results.push(zip)
+      zip = [];
+    }
+
     return results
   };
 
@@ -413,6 +427,23 @@
   //
   // Hint: Use Array.isArray to check if something is an array
   _.flatten = function(nestedArray, result) {
+    result = [];
+
+    var recursion = function(array) {
+      for (var i = 0; i<array.length; i++) {
+        if (Array.isArray(array[i])) {
+          recursion(array[i])
+        }
+        else {
+          result.push(array[i])
+        }
+      }
+    }
+
+    recursion(nestedArray)
+
+    return result
+
   };
 
   // Takes an arbitrary number of arrays and produces an array that contains
